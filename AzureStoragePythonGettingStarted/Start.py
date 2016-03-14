@@ -21,6 +21,7 @@ import time
 
 from azure.storage import CloudStorageAccount
 import config
+import Tables
 import Queues
 
 # Create a queue service object
@@ -30,7 +31,7 @@ else:
     account_name = config.STORAGE_ACCOUNT_NAME
     account_key = config.STORAGE_ACCOUNT_KEY
     sas = config.SAS
-    account = CloudStorageAccount(account_name, account_key, is_emulated=False)
+    account = CloudStorageAccount(account_name, account_key)
 
 #Basic Blob samples
 #Blobs.BlobSamples.RunAllSamples(account)
@@ -38,6 +39,7 @@ else:
 #Basic File samples
 
 #Basic Table samples
+Tables.TableSamples.RunAllSamples(account)
 
 #Basic Queue samples
 Queues.QueueSamples.RunAllSamples(account)
