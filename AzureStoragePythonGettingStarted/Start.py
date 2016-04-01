@@ -1,19 +1,19 @@
 #-------------------------------------------------------------------------
-# Copyright (c) Microsoft.  All rights reserved.
+# Microsoft Developer & Platform Evangelism
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#   http://www.apache.org/licenses/LICENSE-2.0
+# Copyright (c) Microsoft Corporation. All rights reserved.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES 
+# OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+#----------------------------------------------------------------------------------
+# The example companies, organizations, products, domain names,
+# e-mail addresses, logos, people, places, and events depicted
+# herein are fictitious. No association with any real company,
+# organization, product, domain name, email address, logo, person,
+# places, or events is intended or should be inferred.
 #--------------------------------------------------------------------------
 
-#---------------------------------------------------------------------------
 #This sample can be run using either the Azure Storage Emulator (Windows) or by updating the config.properties file with your Storage account name and key.
 
 #To run the sample using the Storage Emulator (default option):
@@ -27,37 +27,41 @@
 #3.Set breakpoints and run the project. 
 #---------------------------------------------------------------------------
 
-from azure.storage import CloudStorageAccount
 import config
-import Queues
+import azure.common
+from azure.storage import CloudStorageAccount
+from Queues import queue_samples
+from Tables import table_samples
+from Files import file_samples
+from Blobs import blob_samples
 
 print('Azure Storage samples for Python')
 
-# Create the storage account object and specify its credentials to either point to the local Emulator or your Azure subscription
+#try:
+    # Create the storage account object and specify its credentials to either point to the local Emulator or your Azure subscription
 if config.IS_EMULATED:
     account = CloudStorageAccount(is_emulated=True)
 else:
     account_name = config.STORAGE_ACCOUNT_NAME
     account_key = config.STORAGE_ACCOUNT_KEY
+    account = CloudStorageAccount(account_name, account_key)
 
-    try:
-        account = CloudStorageAccount(account_name, account_key, is_emulated=False)
-    except Exception as e:
-        print ('Account name and key cannot be empty')
+#Basic Blob samples
+print ('---------------------------------------------------------------')
+print('Azure Storage Blob samples')
+blob_samples.run_all_samples(account)
 
-##Basic Blob samples
-#print('Azure Storage Blob samples')
-##Blobs.BlobSamples.RunAllSamples(account)
+#Basic File samples
+print ('---------------------------------------------------------------')
+print('Azure Storage File samples')
+file_samples.run_all_samples(account)
 
-##Basic File samples
-#print('Azure Storage File samples')
-##File.FileSamples.RunAllSamples(account)
-
-##Basic Table samples
-#print('Azure Storage Table samples')
-##Table.TableSamples.RunAllSamples(account)
+#Basic Table samples
+print ('---------------------------------------------------------------')
+print('Azure Storage Table samples')
+table_samples.run_all_samples(account)
 
 #Basic Queue samples
+print ('---------------------------------------------------------------')
 print('Azure Storage Queue samples')
-Queues.QueueSamples.RunSamples(account)
-
+queue_samples.run_all_samples(account)
