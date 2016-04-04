@@ -13,8 +13,7 @@
 # organization, product, domain name, email address, logo, person,
 # places, or events is intended or should be inferred.
 #--------------------------------------------------------------------------
-import config
-from random import randint
+import random, config
 from azure.storage import CloudStorageAccount
 from azure.storage.table import TableService, Entity
 
@@ -27,6 +26,7 @@ from azure.storage.table import TableService, Entity
 #  - Getting Started with Tables - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-table-storage/
 #  - Table Service Concepts - http://msdn.microsoft.com/en-us/library/dd179463.aspx
 #  - Table Service REST API - http://msdn.microsoft.com/en-us/library/dd179423.aspx
+#  - Table Service Python API - http://azure.github.io/azure-storage-python/ref/azure.storage.table.html
 #  - Storage Emulator - http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/
 #
 
@@ -35,13 +35,12 @@ class table_samples():
     # Runs all samples for Azure Storage Table service.
     # Input Arguments:
     # account - CloudStorageAccount to use for running the samples
-    @staticmethod
     def run_all_samples(account):
         print('Azure Storage Table sample - Starting.')
         table_service = None
         try:
             table_service = account.create_table_service()
-            table_name = 'tablebasics' + str(randint(0,999))
+            table_name = 'tablebasics' + randomtablename(6)
 
             # Create a new table
             print('Create a table with name - ' + table_name)
@@ -96,3 +95,6 @@ class table_samples():
             else: 
                 print('Error occurred in the sample. Please make sure the account name and key are correct.', e)
 
+    # Gets 6 random characters to append to Table name.
+    def randomtablename(length):
+        return ''.join(random.choice(string.ascii_lowercase) for i in range(length))

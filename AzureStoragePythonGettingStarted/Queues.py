@@ -42,20 +42,20 @@ class queue_samples():
 
     def run_all_samples(account):
         try:
-            #declare variables
+            # declare variables
             queuename = "queuesample" + queue_samples.randomqueuename(6)
             
-            #create a new queue service that can be passed to all methods
-            #queue_service = CloudStorageAccount.create_queue_service(account)
+            # create a new queue service that can be passed to all methods
+            # queue_service = CloudStorageAccount.create_queue_service(account)
             queue_service = account.create_queue_service()
 
-            #Basic queue operations such as creating a queue and listing all queues in your account
+            # Basic queue operations such as creating a queue and listing all queues in your account
             queue_samples.basic_queue_operations(queue_service, queuename)
 
-            #Add a message to a queue in your account
+            # Add a message to a queue in your account
             queue_samples.basic_queue_message_operations(queue_service, queuename)
 
-            #Delete the queue from your account
+            # Delete the queue from your account
             queue_samples.delete_queue(queue_service, queuename)
 
         except Exception as e:
@@ -92,37 +92,37 @@ class queue_samples():
         length = metadata.approximate_message_count
         print('Approximate length of the queue: ', length)
 
-        #Look at the first message only without dequeueing it
+        # Look at the first message only without dequeueing it
         messages = queue_service.peek_messages(queuename)
         for message in messages:
             print('Peeked message content is: ', message.content)
 
-        #Look at the first 5 messages only without any timeout without dequeueing it
+        # Look at the first 5 messages only without any timeout without dequeueing it
         messages = queue_service.peek_messages(queuename, num_messages=5)
         for message in messages:
             print('Peeked message content is: ', message.content)
 
-        #Dequeuing a message
-        #First get the message, to read and process it.
-        # Specify num_messages to process a number of messages. If not specified, num_messages defaults to 1
-        # Specify visibility_timeout optionally to set how long the message is visible
+        # Dequeuing a message
+        # First get the message, to read and process it.
+        #  Specify num_messages to process a number of messages. If not specified, num_messages defaults to 1
+        #  Specify visibility_timeout optionally to set how long the message is visible
         messages = queue_service.get_messages(queuename)
         for message in messages:
             print('Message for dequeueing is: ', message.content)
             # Then delete it. 
-            #Deleting requires the message id and pop receipt (returned by get_messages)
+            # Deleting requires the message id and pop receipt (returned by get_messages)
             # Attempt for 60 seconds. Timeout if it does not complete by that time.
             queue_service.delete_message(queuename, message.id, message.pop_receipt)
             print('Successfully dequeued message')
 
-        #Clear out all messages from the queue
+        # Clear out all messages from the queue
         queue_service.clear_messages(queuename)            
         print('Successfully cleared out all queue messages')
 
-    #Delete the queue
+    # Delete the queue
     def delete_queue(queue_service, queuename):
-        #Delete the queue. 
-        #Warning: This will delete all the messages that are contained in it.
+        # Delete the queue. 
+        # Warning: This will delete all the messages that are contained in it.
         print('Attempting delete of queue: ', queuename)
         queue_service.delete_queue(queuename)    
         print('Successfully deleted queue: ', queuename)

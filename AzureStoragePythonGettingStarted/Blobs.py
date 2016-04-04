@@ -32,12 +32,15 @@ from azure.storage.blob import BlockBlobService, PageBlobService, AppendBlobServ
 #  - Getting Started with Blobs - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-blob-storage/
 #  - Blob Service Concepts - http://msdn.microsoft.com/en-us/library/dd179376.aspx 
 #  - Blob Service REST API - http://msdn.microsoft.com/en-us/library/dd135733.aspx 
+#  - Blob Service Python API - http://azure.github.io/azure-storage-python/ref/azure.storage.blob.html
 #  - Storage Emulator - http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/ 
 #
  
 class blob_samples():
 
     # Runs all samples for Azure Storage Blob service.
+    # Input Arguments:
+    # account - CloudStorageAccount to use for running the samples
     def run_all_samples(account):
         print('\n\nAzure Storage Blob sample - Starting.')
         
@@ -67,13 +70,15 @@ class blob_samples():
             
     
     # Runs basic block blob samples for Azure Storage Blob service.
+    # Input Arguments:
+    # container_name - Container name to use for running the samples
     def basic_blockblob_operations(account):
         file_to_upload = "HelloWorld.png"
         
         # Create a Block Blob Service object
         blockblob_service = account.create_block_blob_service()
         #blockblob_service = BlockBlobService(account_name=config.STORAGE_ACCOUNT_NAME, account_key=config.STORAGE_ACCOUNT_KEY)
-        container_name = 'blockblobbasicscontainer' + blob_samples.randomtablename(6)
+        container_name = 'blockblobbasicscontainer' + blob_samples.randomcontainername(6)
 
         # Create a new container
         print('1. Create a container with name - ' + container_name)
@@ -104,12 +109,14 @@ class blob_samples():
         blockblob_service.delete_container(container_name)
         
     # Runs basic page blob samples for Azure Storage Blob service.
+    # Input Arguments:
+    # account - CloudStorageAccount to use for running the samples
     def basic_pageblob_operations(account):
         file_to_upload = "HelloPageBlobWorld.txt"
         
         # Create a block blob service object
         pageblob_service = account.create_page_blob_service()
-        container_name = 'pageblobbasicscontainer' + blob_samples.randomtablename(6)
+        container_name = 'pageblobbasicscontainer' + blob_samples.randomcontainername(6)
 
         # Create a new container
         print('1. Create a container with name - ' + container_name)
@@ -142,12 +149,14 @@ class blob_samples():
 
      
     # Runs basic append blob samples for Azure Storage Blob service.
+    # Input Arguments:
+    # container_name - Container name to use for running the samples
     def basic_appendblob_operations(account):
         file_to_upload = "HelloAppendBlobWorld.txt"
         
         # Create an append blob service object
         appendblob_service = account.create_append_blob_service()
-        container_name = 'appendblobbasicscontainer' + blob_samples.randomtablename(6)
+        container_name = 'appendblobbasicscontainer' + blob_samples.randomcontainername(6)
 
         # Create a new container
         print('1. Create a container with name - ' + container_name)
@@ -183,6 +192,8 @@ class blob_samples():
        
     
     # Gets Random Bytes of specified size for use in samples.
+    # Input Arguments:
+    # size - size of random bytes to get
     def get_random_bytes(size):
         rand = random.Random()
         result = bytearray(size)
@@ -190,7 +201,7 @@ class blob_samples():
             result[i] = rand.randint(0, 255)
         return bytes(result)
 
-    # Gets 6 random characters to append to Table name.
-    def randomtablename(length):
+    # Gets 6 random characters to append to container name.
+    def randomcontainername(length):
         return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
 
