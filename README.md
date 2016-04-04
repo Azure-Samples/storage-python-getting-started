@@ -1,4 +1,10 @@
-# storage-python-getting-started
+---
+services: storage
+platforms: python
+author: dineshmurthy
+---
+
+# Azure Storage: Getting started usage samples in Python
 Samples documenting basic operations with Azure storage services (Blob, File, Table, Queue) in Python. 
 
 ## Running this sample
