@@ -16,28 +16,29 @@ To run the sample using the Storage Service
 
 ## Deploy this sample 
 
-Option 1. Either fork the sample to a local folder or download the zip file from https://github.com/Azure-Samples/storage-python-getting-started/
+Either fork the sample to a local folder or download the zip file from https://github.com/Azure-Samples/storage-python-getting-started/
 
-Option 2. To get the source code of the SDK via git, type:
+To get the source code of the SDK via git, type:
 git clone git://github.com/Azure-Samples/storage-python-getting-started.git
 cd .\storage-python-getting-started
 
 ##Minimum Requirements
 Python 2.7, 3.3, or 3.4.
+To install Python, please go to https://www.python.org/downloads/
 
 ## More information
-#  - What is a Storage Account - http://azure.microsoft.com/en-us/documentation/articles/storage-whatis-account/  
-#  - Getting Started with Blobs - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-blob-storage/
-#  - Blob Service Concepts - http://msdn.microsoft.com/en-us/library/dd179376.aspx 
-#  - Blob Service REST API - http://msdn.microsoft.com/en-us/library/dd135733.aspx 
-#  - Getting Started with Files - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-file-storage/  
-#  - File Service Concepts - http://msdn.microsoft.com/en-us/library/dn166972.aspx  
-#  - File Service REST API - http://msdn.microsoft.com/en-us/library/dn167006.aspx  
-#  - Getting Started with Tables - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-table-storage/
-#  - Table Service Concepts - http://msdn.microsoft.com/en-us/library/dd179463.aspx
-#  - Table Service REST API - http://msdn.microsoft.com/en-us/library/dd179423.aspx
-#  - Getting Started with Queues - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-queue-storage/
-#  - Queue Service Concepts - http://msdn.microsoft.com/en-us/library/dd179353.aspx
-#  - Queue Service REST API - http://msdn.microsoft.com/en-us/library/dd179363.aspx
-#  - Queue Service Python API - http://azure.github.io/azure-storage-python/ref/azure.storage.queue.html
-#  - Storage Emulator - http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/
+  - What is a Storage Account - http://azure.microsoft.com/en-us/documentation/articles/storage-whatis-account/  
+  - Getting Started with Blobs - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-blob-storage/
+  - Blob Service Concepts - http://msdn.microsoft.com/en-us/library/dd179376.aspx 
+  - Blob Service REST API - http://msdn.microsoft.com/en-us/library/dd135733.aspx 
+  - Getting Started with Files - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-file-storage/  
+  - File Service Concepts - http://msdn.microsoft.com/en-us/library/dn166972.aspx  
+  - File Service REST API - http://msdn.microsoft.com/en-us/library/dn167006.aspx  
+  - Getting Started with Tables - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-table-storage/
+  - Table Service Concepts - http://msdn.microsoft.com/en-us/library/dd179463.aspx
+  - Table Service REST API - http://msdn.microsoft.com/en-us/library/dd179423.aspx
+  - Getting Started with Queues - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-queue-storage/
+  - Queue Service Concepts - http://msdn.microsoft.com/en-us/library/dd179353.aspx
+  - Queue Service REST API - http://msdn.microsoft.com/en-us/library/dd179363.aspx
+  - Queue Service Python API - http://azure.github.io/azure-storage-python/ref/azure.storage.queue.html
+  - Storage Emulator - http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/
