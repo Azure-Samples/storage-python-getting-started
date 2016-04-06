@@ -13,7 +13,7 @@
 # organization, product, domain name, email address, logo, person,
 # places, or events is intended or should be inferred.
 #--------------------------------------------------------------------------
-import random, config
+import random, config, string
 from azure.storage import CloudStorageAccount
 from azure.storage.table import TableService, Entity
 
@@ -33,14 +33,12 @@ from azure.storage.table import TableService, Entity
 class table_samples():
 
     # Runs all samples for Azure Storage Table service.
-    # Input Arguments:
-    # account - CloudStorageAccount to use for running the samples
     def run_all_samples(account):
         print('Azure Storage Table sample - Starting.')
         table_service = None
         try:
             table_service = account.create_table_service()
-            table_name = 'tablebasics' + randomtablename(6)
+            table_name = 'tablebasics' + table_samples.randomtablename(6)
 
             # Create a new table
             print('Create a table with name - ' + table_name)

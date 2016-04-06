@@ -137,11 +137,11 @@ class file_samples():
 
 
         # Demonstrate how to list files and directories contains under Azure File share
-        print('\nAttempting to list all files and directories in share folder:')
+        print('\nAttempting to list files and directories directory under share "' + sharename + '":')
 
         # Create a generator to list directories and files under share
         generator = file_service.list_directories_and_files(sharename)
-        # Prints all the directories and files under the share
+        # Prints the directories and files under the share
         for file_or_dir in generator:
             print(file_or_dir.name)
         
