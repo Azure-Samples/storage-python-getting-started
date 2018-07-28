@@ -14,7 +14,7 @@
 #--------------------------------------------------------------------------
 
 
-STORAGE_ACCOUNT_NAME = 'dineshmstorage'
+STORAGE_ACCOUNT_NAME = ''
 STORAGE_ACCOUNT_KEY = ''
 SAS = ''
 IS_EMULATED = False
