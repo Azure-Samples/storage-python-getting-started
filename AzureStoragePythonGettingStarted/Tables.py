@@ -1,19 +1,21 @@
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 # Microsoft Developer & Platform Evangelism
 #
 # Copyright (c) Microsoft Corporation. All rights reserved.
 #
-# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
-# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES 
+# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES
 # OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-#----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
 # The example companies, organizations, products, domain names,
 # e-mail addresses, logos, people, places, and events depicted
 # herein are fictitious. No association with any real company,
 # organization, product, domain name, email address, logo, person,
 # places, or events is intended or should be inferred.
-#--------------------------------------------------------------------------
-import random, config, string
+# --------------------------------------------------------------------------
+import random
+import config
+import string
 from azure.storage import CloudStorageAccount
 from azure.storage.table import TableService, Entity
 
@@ -29,6 +31,7 @@ from azure.storage.table import TableService, Entity
 #  - Table Service Python API - http://azure.github.io/azure-storage-python/ref/azure.storage.table.html
 #  - Storage Emulator - http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/
 #
+
 
 class table_samples():
 
@@ -46,10 +49,12 @@ class table_samples():
             try:
                 table_service.create_table(table_name)
             except Exception as err:
-                print('Error creating table, ' + table_name + 'check if it already exists')
- 
+                print('Error creating table, ' + table_name +
+                      'check if it already exists')
+
             # Create a sample entity to insert into the table
-            customer = {'PartitionKey': 'Harp', 'RowKey': '1', 'email' : 'harp@contoso.com', 'phone' : '555-555-5555'}
+            customer = {'PartitionKey': 'Harp', 'RowKey': '1',
+                        'email': 'harp@contoso.com', 'phone': '555-555-5555'}
 
             # Insert the entity into the table
             print('Inserting a new entity into table - ' + table_name)
@@ -62,19 +67,18 @@ class table_samples():
             print(entity['email'])
             print(entity['phone'])
 
-
             # Demonstrate how to update the entity by changing the phone number
             print('Update an existing entity by changing the phone number')
-            customer = {'PartitionKey': 'Harp', 'RowKey': '1', 'email' : 'harp@contoso.com', 'phone' : '425-123-1234'}
+            customer = {'PartitionKey': 'Harp', 'RowKey': '1',
+                        'email': 'harp@contoso.com', 'phone': '425-123-1234'}
             table_service.update_entity(table_name, customer)
-
 
             # Demonstrate how to query the updated entity, filter the results with a filter query and select only the value in the phone column
             print('Read the updated entity with a filter query')
-            entities = table_service.query_entities(table_name, filter="PartitionKey eq 'Harp'", select='phone')
+            entities = table_service.query_entities(
+                table_name, filter="PartitionKey eq 'Harp'", select='phone')
             for entity in entities:
                 print(entity['phone'])
-
 
             # Demonstrate how to delete an entity
             print('Delete the entity')
@@ -89,9 +93,11 @@ class table_samples():
             print('Azure Storage Table sample - Completed.')
         except Exception as e:
             if (config.IS_EMULATED):
-                print('Error occurred in the sample. If you are using the emulator, please make sure the emulator is running.', e)
-            else: 
-                print('Error occurred in the sample. Please make sure the account name and key are correct.', e)
+                print(
+                    'Error occurred in the sample. If you are using the emulator, please make sure the emulator is running.', e)
+            else:
+                print(
+                    'Error occurred in the sample. Please make sure the account name and key are correct.', e)
 
     # Gets 6 random characters to append to Table name.
     def randomtablename(length):

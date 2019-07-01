@@ -1,18 +1,18 @@
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 # Microsoft Developer & Platform Evangelism
 #
 # Copyright (c) Microsoft Corporation. All rights reserved.
 #
-# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
-# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES 
+# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES
 # OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-#----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
 # The example companies, organizations, products, domain names,
 # e-mail addresses, logos, people, places, and events depicted
 # herein are fictitious. No association with any real company,
 # organization, product, domain name, email address, logo, person,
 # places, or events is intended or should be inferred.
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 
 import uuid
 import random
@@ -30,15 +30,16 @@ from azure.storage import CloudStorageAccount
 from azure.storage.file import FileService
 
 #
-# Azure File Service Sample - Demonstrate how to perform common tasks using the Microsoft Azure File Service.  
-#  
-# Documentation References:  
-#  - What is a Storage Account - http://azure.microsoft.com/en-us/documentation/articles/storage-whatis-account/  
-#  - Getting Started with Files - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-file-storage/  
-#  - File Service Concepts - http://msdn.microsoft.com/en-us/library/dn166972.aspx  
-#  - File Service REST API - http://msdn.microsoft.com/en-us/library/dn167006.aspx  
+# Azure File Service Sample - Demonstrate how to perform common tasks using the Microsoft Azure File Service.
+#
+# Documentation References:
+#  - What is a Storage Account - http://azure.microsoft.com/en-us/documentation/articles/storage-whatis-account/
+#  - Getting Started with Files - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-file-storage/
+#  - File Service Concepts - http://msdn.microsoft.com/en-us/library/dn166972.aspx
+#  - File Service REST API - http://msdn.microsoft.com/en-us/library/dn167006.aspx
 #  - Storage Emulator - http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/
-#  
+#
+
 
 class file_samples():
 
@@ -49,17 +50,18 @@ class file_samples():
     def run_all_samples(account):
 
         print('Azure Storage File sample - Starting.')
-        
+
         try:
-            #declare variables
+            # declare variables
             filename = 'filesample' + file_samples.randomfilename(6)
             sharename = 'sharesample' + file_samples.randomfilename(6)
-            
+
             # Create a new file service that can be passed to all methods
             file_service = account.create_file_service()
 
-            # Create 
-            file_samples.basic_file_operations(file_service, sharename, filename)
+            # Create
+            file_samples.basic_file_operations(
+                file_service, sharename, filename)
 
             # Delete all Azure Files created in this sample
             file_samples.file_delete_samples(file_service, sharename, filename)
@@ -67,56 +69,59 @@ class file_samples():
         except Exception as e:
             if (config.IS_EMULATED):
                 print('Emulator currently does not support Azure Files.', e)
-            else: 
-                print('Error occurred in the sample. Please make sure the account name and key are correct.', e) 
+            else:
+                print(
+                    'Error occurred in the sample. Please make sure the account name and key are correct.', e)
 
         finally:
             print('\n\nAzure Storage File sample - Completed.')
-    
+
     def basic_file_operations(file_service, sharename, filename):
         # Creating an SMB file share in your Azure Files account.
-        print('\nAttempting to create a sample file from text for upload demonstration.')   
+        print('\nAttempting to create a sample file from text for upload demonstration.')
         # All directories and share must be created in a parent share.
         # Max capacity: 5TB per share
-        print('Creating sample share.') 
+        print('Creating sample share.')
         file_service.create_share(sharename)
-        print('Sample share "'+ sharename +'" created.')
+        print('Sample share "' + sharename + '" created.')
 
         # Creating an optional file directory in your Azure Files account.
-        print('Creating a sample directory.')    
+        print('Creating a sample directory.')
         file_service.create_directory(
-            sharename, 
+            sharename,
             'mydirectory')
         print('Sample directory "mydirectory" created.')
 
         # Uploading text to sharename/mydirectory/my_text_file.txt in Azure Files account.
         # Max capacity: 1TB per file
-        print('Uploading a sample file from text.')   
+        print('Uploading a sample file from text.')
         file_service.create_file_from_text(
-            sharename,              # share        
+            sharename,              # share
             'mydirectory',          # directory path - root path if none
             filename,               # destination file name
             'Hello World! - from text sample')    # file text
-        print('Sample file "' + filename + '" created and uploaded to: ' + sharename + '/mydirectory')
-  
+        print('Sample file "' + filename +
+              '" created and uploaded to: ' + sharename + '/mydirectory')
+
         # Demonstrate how to create a share and upload a file from a local temporary file path
-        print('\nAttempting to upload a sample file from path for upload demonstration.')  
+        print('\nAttempting to upload a sample file from path for upload demonstration.')
         # Creating a temporary file to upload to Azure Files
-        print('Creating a temporary file from text.') 
-        with tempfile.NamedTemporaryFile(delete=False) as my_temp_file: #
+        print('Creating a temporary file from text.')
+        with tempfile.NamedTemporaryFile(delete=False) as my_temp_file:
             my_temp_file.file.write(b"Hello world!")
-        print('Sample temporary file created.') 
+        print('Sample temporary file created.')
 
         # Uploading my_temp_file to sharename/mydirectory folder in Azure Files
         # Max capacity: 1TB per file
-        print('Uploading a sample file from local path.')                    
+        print('Uploading a sample file from local path.')
         file_service.create_file_from_path(
             sharename,              # share name
             None,                   # directory path - root path if none
             filename,               # destination file name
             my_temp_file.name)      # full source path with file name
 
-        print('Sample file "' + filename + '" uploaded from path to share: ' + sharename)
+        print('Sample file "' + filename +
+              '" uploaded from path to share: ' + sharename)
 
         # Close the temp file
         my_temp_file.close()
@@ -135,7 +140,6 @@ class file_samples():
 
         print('Sample file downloaded to: ' + destination_file)
 
-
         # Demonstrate how to list files and directories contains under Azure File share
         print('\nAttempting to list files and directories directory under share "' + sharename + '":')
 
@@ -144,7 +148,7 @@ class file_samples():
         # Prints the directories and files under the share
         for file_or_dir in generator:
             print(file_or_dir.name)
-        
+
         print('Files and directories under share "' + sharename + '" listed.')
         print('\nCompleted successfully - Azure basic Files operations.')
 
@@ -160,7 +164,8 @@ class file_samples():
                 sharename,              # share name
                 'mydirectory',          # directory path
                 filename)               # file name to delete
-            print('Sample file "' + filename + '" deleted from: ' + sharename + '/mydirectory' )
+            print('Sample file "' + filename +
+                  '" deleted from: ' + sharename + '/mydirectory')
 
             # Deleting directory: 'sharename/mydirectory'
             print('Deleting sample directory and all files and directories under it.')
@@ -170,7 +175,8 @@ class file_samples():
             print('Sample directory "/mydirectory" deleted from: ' + sharename)
 
             # Deleting share: 'sharename'
-            print('Deleting sample share ' + sharename + ' and all files and directories under it.')
+            print('Deleting sample share ' + sharename +
+                  ' and all files and directories under it.')
             file_service.delete_share(
                 sharename)              # share name
             print('Sample share "' + sharename + '" deleted.')
@@ -183,6 +189,3 @@ class file_samples():
     # Get random characters to append to File name
     def randomfilename(length):
         return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
-
-
-
