@@ -1,18 +1,18 @@
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 # Microsoft Developer & Platform Evangelism
 #
 # Copyright (c) Microsoft Corporation. All rights reserved.
 #
-# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
-# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES 
+# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES
 # OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-#----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
 # The example companies, organizations, products, domain names,
 # e-mail addresses, logos, people, places, and events depicted
 # herein are fictitious. No association with any real company,
 # organization, product, domain name, email address, logo, person,
 # places, or events is intended or should be inferred.
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 
 from azure.storage import CloudStorageAccount
 from azure.storage.queue import Queue, QueueService, QueueMessage
@@ -24,11 +24,11 @@ import string
 
 # -------------------------------------------------------------
 # <summary>
-# Azure Queue Service Sample - The Queue Service provides reliable messaging for workflow processing and for communication 
-# between loosely coupled components of cloud services. This sample demonstrates how to perform common tasks including 
-# inserting, peeking, getting and deleting queue messages, as well as creating and deleting queues. 
-# 
-# Documentation References: 
+# Azure Queue Service Sample - The Queue Service provides reliable messaging for workflow processing and for communication
+# between loosely coupled components of cloud services. This sample demonstrates how to perform common tasks including
+# inserting, peeking, getting and deleting queue messages, as well as creating and deleting queues.
+#
+# Documentation References:
 # - What is a Storage Account - http://azure.microsoft.com/en-us/documentation/articles/storage-whatis-account/
 # - Getting Started with Queues - https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-queue-storage/
 # - Queue Service Concepts - http://msdn.microsoft.com/en-us/library/dd179353.aspx
@@ -44,7 +44,7 @@ class queue_samples():
         try:
             # declare variables
             queuename = "queuesample" + queue_samples.randomqueuename(6)
-            
+
             # create a new queue service that can be passed to all methods
             # queue_service = CloudStorageAccount.create_queue_service(account)
             queue_service = account.create_queue_service()
@@ -53,16 +53,19 @@ class queue_samples():
             queue_samples.basic_queue_operations(queue_service, queuename)
 
             # Add a message to a queue in your account
-            queue_samples.basic_queue_message_operations(queue_service, queuename)
+            queue_samples.basic_queue_message_operations(
+                queue_service, queuename)
 
             # Delete the queue from your account
             queue_samples.delete_queue(queue_service, queuename)
 
         except Exception as e:
             if (config.IS_EMULATED):
-                print('Error occurred in the sample. Please make sure the Storage emulator is running.', e)
-            else: 
-                print('Error occurred in the sample. Please make sure the account name and key are correct.', e)
+                print(
+                    'Error occurred in the sample. Please make sure the Storage emulator is running.', e)
+            else:
+                print(
+                    'Error occurred in the sample. Please make sure the account name and key are correct.', e)
 
     def basic_queue_operations(queue_service, queuename):
         # Create a queue or leverage one if already exists
@@ -70,7 +73,7 @@ class queue_samples():
         queue_service.create_queue(queuename)
         print('Successfully created queue: ', queuename)
 
-        #List all queues in the account
+        # List all queues in the account
         print('Listing all queues in the account')
         queues = queue_service.list_queues()
         for queue in queues:
@@ -83,11 +86,11 @@ class queue_samples():
         messagename = "test message"
         for i in range(1, 10):
             queue_service.put_message(queuename, messagename + str(i))
-            print ('Successfully added message: ', messagename + str(i))
+            print('Successfully added message: ', messagename + str(i))
 
         # Get length of queue
-        # Retrieve queue metadata which contains the approximate message count ie.. length. 
-        # Note that this may not be accurate given dequeueing operations that could be happening in parallel 
+        # Retrieve queue metadata which contains the approximate message count ie.. length.
+        # Note that this may not be accurate given dequeueing operations that could be happening in parallel
         metadata = queue_service.get_queue_metadata(queuename)
         length = metadata.approximate_message_count
         print('Approximate length of the queue: ', length)
@@ -109,22 +112,23 @@ class queue_samples():
         messages = queue_service.get_messages(queuename)
         for message in messages:
             print('Message for dequeueing is: ', message.content)
-            # Then delete it. 
+            # Then delete it.
             # Deleting requires the message id and pop receipt (returned by get_messages)
             # Attempt for 60 seconds. Timeout if it does not complete by that time.
-            queue_service.delete_message(queuename, message.id, message.pop_receipt)
+            queue_service.delete_message(
+                queuename, message.id, message.pop_receipt)
             print('Successfully dequeued message')
 
         # Clear out all messages from the queue
-        queue_service.clear_messages(queuename)            
+        queue_service.clear_messages(queuename)
         print('Successfully cleared out all queue messages')
 
     # Delete the queue
     def delete_queue(queue_service, queuename):
-        # Delete the queue. 
+        # Delete the queue.
         # Warning: This will delete all the messages that are contained in it.
         print('Attempting delete of queue: ', queuename)
-        queue_service.delete_queue(queuename)    
+        queue_service.delete_queue(queuename)
         print('Successfully deleted queue: ', queuename)
 
     # Gets 6 random characters to append to Queue name
